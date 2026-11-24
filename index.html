@@ -105,7 +105,7 @@
   .nav-links a:hover{color:var(--fg)}
   .nav-actions{display:flex;align-items:center;gap:10px}
   .nav-actions .ghost{font-size:12px;color:var(--fg-200);padding:8px 10px;border-radius:7px}
-  .visit-counter{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 10px;border-radius:8px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;color:#8f9398;white-space:nowrap;transition:border-color .3s ease,background .3s ease,color .3s ease}
+  .visit-counter{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 10px;border-radius:8px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;color:#8f9398;white-space:nowrap;min-width:82px;justify-content:flex-start;transition:border-color .3s ease,background .3s ease,color .3s ease}
   .visit-counter svg{width:13px;height:13px;color:var(--green);opacity:.85}
   .visit-counter .vc-label{font-size:9px;color:#777c80}
   .visit-counter b{font-size:10.5px;font-weight:600;color:#d9dbde;font-variant-numeric:tabular-nums}
@@ -1323,8 +1323,11 @@
     const counterBase = 'https://abacus.jasoncameron.dev';
     const counterPath = '/jerry-tang95.github.io/wechat-lead-adsorb-site-visits';
     const endpoint = isLive ? counterBase + '/hit' + counterPath : counterBase + '/get' + counterPath;
+    const cached = Number(localStorage.getItem('wechat-visit-count') || '');
+    if (Number.isFinite(cached) && cached > 0) visitCountEl.textContent = cached.toLocaleString('en-US');
     const renderCount = (n) => {
       const target = Math.max(0, Number(n) || 0);
+      localStorage.setItem('wechat-visit-count', String(target));
       const start = performance.now();
       const dur = 900;
       const tick = (now) => {
@@ -1337,10 +1340,13 @@
       visitCounterEl.classList.add('pop');
       setTimeout(() => visitCounterEl.classList.remove('pop'), 700);
     };
-    fetch(endpoint, { cache: 'no-store' })
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    fetch(endpoint, { cache: 'no-store', signal: controller.signal })
       .then(r => { if (!r.ok) throw new Error('counter ' + r.status); return r.json(); })
-      .then(d => { if (typeof d.value === 'number') renderCount(d.value); else visitCountEl.textContent = '—'; })
-      .catch(() => { visitCountEl.textContent = '—'; });
+      .then(d => { if (typeof d.value === 'number') renderCount(d.value); })
+      .catch(() => {})
+      .finally(() => clearTimeout(timeout));
   }
 
   /* ---------- smooth anchor offset ---------- */
