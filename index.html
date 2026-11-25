@@ -8,7 +8,8 @@
 <meta property="og:description" content="贴在微信旁边的线索助手。只读微信、人工核对、永不自动保存。">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/frame-8.jpg">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/doge-icon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/doge-icon.png">
 <link rel="preconnect" href="https://abacus.jasoncameron.dev" crossorigin>
 <title>线索吸附助手 — 贴在微信旁边的线索助手</title>
 <style>
@@ -91,11 +92,14 @@
   .nav-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
   .brand{display:flex;align-items:center;gap:10px;min-width:0}
   .brand-mark{
-    width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
-    background:linear-gradient(145deg,#6ce7af,#38bf84);
-    color:#04140c;box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 4px 18px rgba(89,212,153,.25);
+    width:30px;height:30px;border-radius:9px;display:grid;place-items:center;overflow:hidden;flex:0 0 auto;
+    background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025));
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 4px 18px rgba(0,0,0,.32),0 0 0 1px rgba(255,255,255,.04) inset;
+    transition:border-color .3s ease,box-shadow .3s ease;
   }
-  .brand-mark svg{width:16px;height:16px}
+  .brand:hover .brand-mark{border-color:rgba(89,212,153,.36);box-shadow:0 0 0 1px rgba(89,212,153,.12),0 6px 22px rgba(89,212,153,.15)}
+  .brand-mark img{width:100%;height:100%;object-fit:cover;object-position:center 44%;display:block;transform:scale(1.04)}
   .brand-name{font-size:14.5px;font-weight:650;letter-spacing:-.02em;white-space:nowrap}
   .brand-tag{
     font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;color:var(--fg-300);
@@ -685,11 +689,7 @@
   <header class="nav">
     <div class="container nav-inner">
       <a class="brand" href="#top" aria-label="线索吸附助手">
-        <span class="brand-mark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="5" width="12" height="14" rx="2.5"/><rect x="16" y="8" width="5" height="9" rx="1.6" fill="currentColor" stroke="none"/><path d="M15 12h1"/>
-          </svg>
-        </span>
+        <span class="brand-mark"><img src="assets/doge-icon.png" alt="Doge 图标"></span>
         <span class="brand-name">线索吸附</span>
         <span class="brand-tag">ADAPTED</span>
       </a>
@@ -1134,7 +1134,7 @@
       <div class="footer-main">
         <div class="footer-brand">
           <a class="brand" href="#top">
-            <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="12" height="14" rx="2.5"/><rect x="16" y="8" width="5" height="9" rx="1.6" fill="currentColor" stroke="none"/><path d="M15 12h1"/></svg></span>
+            <span class="brand-mark"><img src="assets/doge-icon.png" alt="Doge 图标"></span>
             <span class="brand-name">线索吸附</span>
           </a>
           <p>贴在微信旁边的线索吸附助手。只读微信、人工核对、永不自动保存。</p>
